@@ -41,7 +41,7 @@ def evaluate_grades(data):
     # a) Check if all scores are percentage based (0-100)
 
     invalid_scores = False
-    for school_assignments:
+    for item in data:
         if item['score'] < 0 or item['score'] > 100:
             print(f"Error: Score {item['score']} for '{item['assignment']}' "
                   f"is outside the valid range 0-100.")
@@ -85,7 +85,7 @@ def evaluate_grades(data):
 
     formative_points = sum(d['score'] * d['weight'] / 100 for d in formative)
     summative_points = sum(d['score'] * d['weight'] / 100 for d in summative)
-    total_grade = formative_scores + summative_scores
+    total_grade = formative_points + summative_points
     gpa = (total_grade / 100) * 5.0
 
     # Category percentages (points earned out of the category weight)
@@ -102,7 +102,7 @@ def evaluate_grades(data):
     #          and determine which one(s) have the highest weight for resubmission.
 
 
-        failed_formatives = [d for d in formative if d['score'] < 50]
+    failed_formatives = [d for d in formative if d['score'] < 50]
     resubmit = []
     if failed_formatives:
         highest = failed_formatives[0]['weight']
