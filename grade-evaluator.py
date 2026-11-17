@@ -41,13 +41,13 @@ def evaluate_grades(data):
     # a) Check if all scores are percentage based (0-100)
 
     invalid_scores = False
-    for item in data:
+    for school_assignments:
         if item['score'] < 0 or item['score'] > 100:
             print(f"Error: Score {item['score']} for '{item['assignment']}' "
                   f"is outside the valid range 0-100.")
             invalid_scores = True
     if invalid_scores:
-        print("Please correct the scores above and run the program again.")
+        print("Please re-check the assignment scores.")
         sys.exit(1)
 
     # Make sure every row belongs to a known category
@@ -77,7 +77,7 @@ def evaluate_grades(data):
         print(f"Error: Summative weight is {summative_weight:g}, it must be exactly 40.")
         weight_ok = False
     if not weight_ok:
-        print("Please fix the weights in your CSV file and run the program again.")
+        print("Please re-check weights in CSV files.")
         sys.exit(1)
 
 
@@ -85,7 +85,7 @@ def evaluate_grades(data):
 
     formative_points = sum(d['score'] * d['weight'] / 100 for d in formative)
     summative_points = sum(d['score'] * d['weight'] / 100 for d in summative)
-    total_grade = formative_points + summative_points
+    total_grade = formative_scores + summative_scores
     gpa = (total_grade / 100) * 5.0
 
     # Category percentages (points earned out of the category weight)
@@ -95,7 +95,7 @@ def evaluate_grades(data):
 
     # d) Determine Pass/Fail status (>= 50% in BOTH categories)
 
-passed = formative_pct >= 50 and summative_pct >= 50
+    passed = formative_pct >= 50 and summative_pct >= 50
     status = "PASSED" if passed else "FAILED"
 
     # e) Check for failed formative assignments (< 50%)
@@ -115,9 +115,9 @@ passed = formative_pct >= 50 and summative_pct >= 50
 
 
     # f) Print the final decision (PASSED / FAILED) and resubmission options
-    print(f"\nFormative: {formative_points:.2f}/{formative_weight:g} ({formative_pct:.2f}%)")
-    print(f"Summative: {summative_points:.2f}/{summative_weight:g} ({summative_pct:.2f}%)")
-    print(f"Total Grade: {total_grade:.2f}/100")
+    print(f"\nFormative: {formative_points}/{formative_weight:g} ({formative_pct}%)")
+    print(f"Summative: {summative_points}/{summative_weight:g} ({summative_pct}%)")
+    print(f"Total Grade: {total_grade}/100")
     print(f"GPA: {gpa:.4f}")
     print(f"\nFinal Status: {status}")
 
